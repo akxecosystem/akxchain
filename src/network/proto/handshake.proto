@@ -1,0 +1,22 @@
+syntax = 'proto3';
+
+package network.pb;
+
+option go_package =  "./pb";
+
+message HandshakeRequest {
+  Peer peerA = 1;
+  Peer peerB = 2;
+  bytes challenge = 3;
+
+}
+
+message Peer {
+  string id = 1;
+  string publicKey = 2;
+}
+
+message HandshakeResponse {
+  bool ok = 1;
+}
+

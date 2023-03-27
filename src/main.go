@@ -1,10 +1,11 @@
 package main
 
 import (
-	"akxchain/internal/libs/kem"
-	"github.com/davecgh/go-spew/spew"
+	"context"
+	"github.com/akxecosystem/akxchain/network"
 	"github.com/k0kubun/go-ansi"
 	progressbar "github.com/schollz/progressbar/v3"
+	"log"
 	"time"
 )
 
@@ -27,10 +28,15 @@ func main() {
 		time.Sleep(2 * time.Millisecond)
 	}
 
-	kp, err := kem.GenerateNewKeyPair()
+	node, _, err := network.NewNode(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}
-	spew.Dump(kp)
+	log.Print(node.ID().String())
+
+	/*kp, s := kem.CreateNewKeysWithSharedSecret()
+
+	spew.Dump(s)
+	spew.Dump(kp.)*/
 
 }
