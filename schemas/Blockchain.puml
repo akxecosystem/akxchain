@@ -1,0 +1,48 @@
+@startuml
+
+!define MAIN_COLOR #00A6ED
+!define SIDE_COLOR #6F9EAF
+
+title Main Blockchain and Sidechain Architecture
+
+rectangle "Application Layer" {
+    rectangle "Sidechain Layer" {
+        database "Transaction Data" as txdata
+        rectangle "Sidechain Validators" {
+            actor "Validator 1" as v1
+            actor "Validator 2" as v2
+        }
+        v1 --> txdata
+        v2 --> txdata
+        note right: - Transactions are validated by\n  sidechain validators\n- Validated transactions are\n  stored in the transaction data\n  database\n- Only the necessary information\n  is included in the main blockchain\n  for each transaction
+    }
+    rectangle "Blockchain Layer" {
+        rectangle "Block Data" as blockdata
+        rectangle "Blockchain Validators" {
+            actor "Validator 1" as v1
+            actor "Validator 2" as v2
+        }
+        v1 --> blockdata
+        v2 --> blockdata
+        blockdata --> txdata
+        note right: - Blocks are validated by\n  blockchain validators\n- Block data includes references\n  to validated transactions\n- Only necessary information is\n  included in the main blockchain\n  for each block
+    }
+    rectangle "Network Layer" {
+        rectangle "Peer Nodes" {
+            actor "Node 1" as n1
+            actor "Node 2" as n2
+        }
+        n1 --> v1
+        n1 --> v2
+        n2 --> v1
+        n2 --> v2
+        note right: - Peer nodes communicate with\n  each other to share data and\n  validate transactions and blocks
+    }
+    rectangle "User Interface" {
+        actor "User" as user
+    }
+    user --> n1
+}
+
+
+@enduml
